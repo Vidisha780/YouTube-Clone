@@ -9,17 +9,17 @@ fetch(video_http + new URLSearchParams({
     key: api_key,
     part: 'snippet',
     chart: 'mostPopular',
-    maxResult: 50,
+    maxResults: 50,    
     regionCode: 'IN'
 }))
-.then(res => res.json())
+.then(response => response.json())
 .then(data => {
     // console.log(data)
     data.items.forEach(item => {
         getChannelIcon(item);
     })
 })
-.catch(err => console.log(err));
+.catch(err => console.log(err));    //handling the errors
 
 const getChannelIcon = (video_data) => {
     fetch(channel_http + new URLSearchParams({
@@ -52,3 +52,13 @@ const makeVideoCard = (data) => {
     `;
 }
 
+// search bar 
+const searchInput = document.querySelector(".search-bar");
+const searchBtn = document.querySelector(".search-btn");
+let searchLink = "https://www.youtube.com/results?search_query=";
+
+searchBtn.addEventListener("click", () => {
+    if(searchInput.value.length){
+        location.href = searchLink + searchInput.value;
+    }
+})
